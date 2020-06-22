@@ -1,5 +1,11 @@
 import TransactionsRepository from '../repositories/TransactionsRepository';
-import Transaction from '../models/Transaction';
+import Transaction, { TransactionType } from '../models/Transaction';
+
+interface Request {
+  title: string;
+  value: number;
+  type: TransactionType;
+}
 
 class CreateTransactionService {
   private transactionsRepository: TransactionsRepository;
@@ -8,8 +14,14 @@ class CreateTransactionService {
     this.transactionsRepository = transactionsRepository;
   }
 
-  public execute(): Transaction {
-    // TODO
+  public execute({ title, value, type }: Request): Transaction {
+    const transaction = {
+      title,
+      value,
+      type,
+    };
+
+    return this.transactionsRepository.create(transaction);
   }
 }
 
